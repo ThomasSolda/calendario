@@ -21,31 +21,21 @@
     var calendarEl = document.getElementById('calendar');
 
     var  calendar = new FullCalendar.Calendar(calendarEl, {
-      defaultDate: new Date(2019,8,1),
+      defaultDate: new Date,
       plugins: ['dayGrid', 'interaction', 'timeGrid', 'list'],
 
       header:{
-        left:'prev, next today Miboton',
+        left:'prev, next today',
         center:'title',
         right:'dayGridMonth, timeGridWeek, timeGridDay'
       },
-      customButtons:{
 
-        MiBoton:{
-          text:"Botón",
-          click:function(){
-
-            alert("Hola Mundo!");
-            $('#exampleModal').modal();
-          }
-        }
-
-      },
       dateClick:function(info){
         $('#txtFecha').val(info.dateStr);
         $('#exampleModal').modal();
-        console.log(info);
-        calendar.addEvent({ title: "Evento X", date: info.dateStr });
+
+        // console.log(info);
+        // calendar.addEvent({ title: "Evento X", date: info.dateStr });
       },
       eventClick:function(info){
         // console.log(info);
@@ -61,11 +51,22 @@
         $('#txtID').val(info.event.id);
         $('#txtTitulo').val(info.event.title);
 
-        $('#txtFecha').val(info.event.start);
-        $('#txtHora').val(info.event.start);
+        mes = (info.event.start.getMonth()+1);
+        dia = (info.event.start.getDay());
+        anio = (info.event.start.getFullYear());
+
+        mes = (mes<10)?"0"+mes:mes;
+        dia = (dia<10)?"0"+dia:dia;
+
+        hora = (info.event.start.getHours()+":"+info.event.start.getMinutes());
+        hora = (info.event.start.getMinutes() == 00)?hora+"0":hora;
+
+        $('#txtFecha').val(anio+"-"+mes+"-"+dia);
+        $('#txtHora').val(hora);
+
         $('#txtColor').val(info.event.backgroundColor);
 
-        $('#txtDescripcion').val(info.event.extendedProps.descripcion);
+        $('#txtDescription').val(info.event.extendedProps.descripcion);
 
         $('#exampleModal').modal();
       },
@@ -79,14 +80,24 @@
 
     $('#btnAgregar').click(function(){
       ObjEvento = recolectarDatosGUI("POST");
-      enviarInformacion(' ', ObjEvento);
+      enviarInformacion('', ObjEvento);
     })
+
+    $('#btnEliminar').click(function(){
+      ObjEvento = recolectarDatosGUI("DELETE");
+      enviarInformacion('/'+$('#txtID').val(), ObjEvento);
+    })
+    //////////////////ver botón modificar///////////////////////
+    // $('#btnModificar').click(function(){
+    //   ObjEvento = recolectarDatosGUI("EDIT");
+    //   enviarInformacion('/'+$('#txtID').val(), ObjEvento);
+    // })
 
     function recolectarDatosGUI(method){
       nuevoEvento={
         id:$('#txtID').val(),
         title:$('#txtTitulo').val(),
-        descripcion:$('#txtDescripcion').val(),
+        description:$('#txtDescription').val(),
         color:$('#txtColor').val(),
         textColor:'#FFFFFF',
         start:$('#txtFecha').val()+ " " +$('#txtHora').val(),
@@ -105,7 +116,14 @@
         type: "POST",
         url:"{{ url('/eventos') }}"+accion,
         data: objEvento,
-        success:function(msg){ console.log(msg);},
+        success:function(msg){
+          console.log(msg);
+
+          $('#exampleModal').modal('toggle');
+          calendar.refetchEvents();
+
+
+        },
         error: function(){ alert("Hay un error");}
 
       });
@@ -146,7 +164,7 @@
           <input type="text" name="txtHora" id="txtHora">
           <br/>
           Descripción:
-          <textarea name="txtDescripcion" id="txtDescripcion" rows="10" cols="30"></textarea>
+          <textarea name="txtDescription" id="txtDescription" rows="10" cols="30"></textarea>
           <br/>
           Color:
           <input type="color" name="txtColor" id="txtColor">
@@ -157,7 +175,7 @@
 
           <button id="btnAgregar" class="btn btn-success">Agregar</button>
           <button id="btnModificar" class="btn btn-warning">Modificar</button>
-          <button id="btnBorrar" class="btn btn-danger">Borrar</button>
+          <button id="btnEliminar" class="btn btn-danger">Borrar</button>
           <button id="btnCancelar" class="btn btn-secondary">Cancelar</button>
 
         </div>

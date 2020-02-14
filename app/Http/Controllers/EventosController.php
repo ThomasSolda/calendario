@@ -52,7 +52,7 @@ class EventosController extends Controller
     {
         //
         $data['eventos'] = evento::all();
-        
+
         return response()->json($data['eventos']);
 
     }
@@ -77,7 +77,11 @@ class EventosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      ////////////////revisar////////////////////////
+      // $eventos = evento::findOrFail($id);
+      // $datosEvento = request()->except(['_token','_method']);
+      // evento::insert($datosEvento);
+      // print_r($datosEvento);
     }
 
     /**
@@ -88,6 +92,9 @@ class EventosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $eventos = evento::findOrFail($id);
+        evento::destroy($id);
+
+        return response()->json($id);
     }
 }
