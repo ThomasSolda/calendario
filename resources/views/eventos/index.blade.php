@@ -88,10 +88,10 @@
       enviarInformacion('/'+$('#txtID').val(), ObjEvento);
     })
     //////////////////ver botón modificar///////////////////////
-    // $('#btnModificar').click(function(){
-    //   ObjEvento = recolectarDatosGUI("EDIT");
-    //   enviarInformacion('/'+$('#txtID').val(), ObjEvento);
-    // })
+     $('#btnModificar').click(function(){
+       ObjEvento = recolectarDatosGUI("PUT");
+       enviarInformacion('/'+$('#txtID').val(), ObjEvento);
+     })
 
     function recolectarDatosGUI(method){
       nuevoEvento={
@@ -121,7 +121,6 @@
 
           $('#exampleModal').modal('toggle');
           calendar.refetchEvents();
-
 
         },
         error: function(){ alert("Hay un error");}

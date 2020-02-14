@@ -13,6 +13,6 @@
 
 Route::get('/', 'EventosController@index');
 
-Auth::routes();
+
 Route::resource('eventos', 'EventosController');
 Route::get('/home', 'HomeController@index')->name('home');

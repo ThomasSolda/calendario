@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\evento;
+use Notification;
 
 class EventosController extends Controller
 {
@@ -14,7 +15,7 @@ class EventosController extends Controller
      */
     public function index()
     {
-        //
+      //
         return view("eventos.index");
     }
 
@@ -36,10 +37,11 @@ class EventosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      //
         $datosEvento = request()->except(['_token','_method']);
         evento::insert($datosEvento);
         print_r($datosEvento);
+
     }
 
     /**
@@ -65,7 +67,7 @@ class EventosController extends Controller
      */
     public function edit($id)
     {
-        //
+      //
     }
 
     /**
@@ -77,11 +79,16 @@ class EventosController extends Controller
      */
     public function update(Request $request, $id)
     {
-      ////////////////revisar////////////////////////
-      // $eventos = evento::findOrFail($id);
-      // $datosEvento = request()->except(['_token','_method']);
-      // evento::insert($datosEvento);
-      // print_r($datosEvento);
+      $eventos = evento::findOrFail($id);
+      $eventos->title  = $request->title;
+      $eventos->description  = $request->description;
+      $eventos->color  = $request->color;
+      $eventos->textColor  = $request->textColor;
+      $eventos->start  = $request->start;
+      $eventos->end  = $request->end;
+      $eventos->save();
+
+      print_r($eventos);
     }
 
     /**
