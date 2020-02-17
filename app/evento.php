@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class evento extends Model
 {
     //
+    protected $primary_key = 'id';
 }

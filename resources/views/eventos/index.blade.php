@@ -23,7 +23,6 @@
     var  calendar = new FullCalendar.Calendar(calendarEl, {
       defaultDate: new Date,
       plugins: ['dayGrid', 'interaction', 'timeGrid', 'list'],
-
       header:{
         left:'prev, next today',
         center:'title',
@@ -33,21 +32,9 @@
       dateClick:function(info){
         $('#txtFecha').val(info.dateStr);
         $('#exampleModal').modal();
-
-        // console.log(info);
-        // calendar.addEvent({ title: "Evento X", date: info.dateStr });
       },
       eventClick:function(info){
-        // console.log(info);
-        // console.log(info.event.title);
-        // console.log(info.event.start);
-        //
-        // console.log(info.event.end);
-        // console.log(info.event.textColor);
-        // console.log(info.event.backgroundColor);
-        //
-        // console.log(info.event.extendedProps.descripcion);
-
+        if(info){
         $('#txtID').val(info.event.id);
         $('#txtTitulo').val(info.event.title);
 
@@ -58,22 +45,50 @@
         mes = (mes<10)?"0"+mes:mes;
         dia = (dia<10)?"0"+dia:dia;
 
-        hora = (info.event.start.getHours()+":"+info.event.start.getMinutes());
-        hora = (info.event.start.getMinutes() == 00)?hora+"0":hora;
+        horaStart = (info.event.start.getHours()+":"+info.event.start.getMinutes());
+        horaStart = (info.event.start.getMinutes() == 00)?horaStart+"0":horaStart;
+
+        horaEnd = (info.event.end.getHours()+":"+info.event.end.getMinutes());
+        horaEnd = (info.event.end.getMinutes() == 00)?horaEnd+"0":horaEnd;
 
         $('#txtFecha').val(anio+"-"+mes+"-"+dia);
-        $('#txtHora').val(hora);
-
+        $('#txtHoraEmpieza').val(horaStart);
+        $('#txtHoraTermina').val(horaEnd);
         $('#txtColor').val(info.event.backgroundColor);
-
-        $('#txtDescription').val(info.event.extendedProps.descripcion);
+        $('#txtDescription').val(info.event.extendedProps.description);
 
         $('#exampleModal').modal();
+      }else{
+        $('#txtID').val(info.event.id);
+        $('#txtTitulo').val(info.event.title);
+
+        mes = (info.event.start.getMonth()+1);
+        dia = (info.event.start.getDay());
+        anio = (info.event.start.getFullYear());
+
+        mes = (mes<10)?"0"+mes:mes;
+        dia = (dia<10)?"0"+dia:dia;
+
+        horaStart = (info.event.start.getHours()+":"+info.event.start.getMinutes());
+        horaStart = (info.event.start.getMinutes() == 00)?horaStart+"0":horaStart;
+
+        horaEnd = (info.event.end.getHours()+":"+info.event.end.getMinutes());
+        horaEnd = (info.event.end.getMinutes() == 00)?horaEnd+"0":horaEnd;
+
+        $('#txtFecha').val(anio+"-"+mes+"-"+dia);
+        $('#txtHoraEmpieza').val(horaStart);
+        $('#txtHoraTermina').val(horaEnd);
+        $('#txtColor').val(info.event.backgroundColor);
+        $('#txtDescription').val(info.event.extendedProps.description);
+
+        $('#exampleModal').modal();
+      }
       },
 
       events:"{{ url('/eventos/show') }}"
 
     });
+
     calendar.setOption('locale', 'Es');
 
     calendar.render();
@@ -100,8 +115,8 @@
         description:$('#txtDescription').val(),
         color:$('#txtColor').val(),
         textColor:'#FFFFFF',
-        start:$('#txtFecha').val()+ " " +$('#txtHora').val(),
-        end:$('#txtFecha').val()+ " " +$('#txtHora').val(),
+        start:$('#txtFecha').val()+ " " +$('#txtHoraEmpieza').val(),
+        end:$('#txtFecha').val()+ " " +$('#txtHoraTermina').val(),
 
         '_token':$("meta[name='csrf-token']").attr("content"),
         '_method':method
@@ -149,25 +164,35 @@
         </div>
 
         <div class="modal-body">
-
-          ID:
-          <input type="text" name="txtID" id="txtID">
-          <br/>
-          Fecha:
-          <input type="text" name="txtFecha" id="txtFecha">
-          <br/>
-          Título:
-          <input type="text" name="txtTitulo" id="txtTitulo">
-          <br/>
-          Hora:
-          <input type="text" name="txtHora" id="txtHora">
-          <br/>
-          Descripción:
-          <textarea name="txtDescription" id="txtDescription" rows="10" cols="30"></textarea>
-          <br/>
-          Color:
-          <input type="color" name="txtColor" id="txtColor">
-          <br/>
+          <input type="text" name="txtID" style="display: none"id="txtID">
+          <div class="row">
+            <div class="col">
+              Fecha:
+              <input type="text" name="txtFecha" id="txtFecha" class="form-control">
+            </div>
+            <div class="col">
+              Título:
+              <input type="text" name="txtTitulo" id="txtTitulo" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              Hora:
+              <input type="text" name="txtHoraEmpieza" id="txtHoraEmpieza" class="form-control">
+            </div>
+            <div class="col">
+              Hora Fin:
+              <input type="text" name="txtHoraTermina" id="txtHoraTermina" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+            Descripción:
+            <input type="text" name="txtDescription" id="txtDescription" class="form-control">
+            </div>
+          </div>
+            Color:
+            <input type="color" name="txtColor" id="txtColor" class="form-control">
         </div>
 
         <div class="modal-footer">
@@ -175,7 +200,7 @@
           <button id="btnAgregar" class="btn btn-success">Agregar</button>
           <button id="btnModificar" class="btn btn-warning">Modificar</button>
           <button id="btnEliminar" class="btn btn-danger">Borrar</button>
-          <button id="btnCancelar" class="btn btn-secondary">Cancelar</button>
+          <!--<button id="btnCancelar" class="btn btn-secondary">Cancelar</button>-->
 
         </div>
 

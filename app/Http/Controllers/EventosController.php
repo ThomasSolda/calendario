@@ -79,16 +79,10 @@ class EventosController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $eventos = evento::findOrFail($id);
-      $eventos->title  = $request->title;
-      $eventos->description  = $request->description;
-      $eventos->color  = $request->color;
-      $eventos->textColor  = $request->textColor;
-      $eventos->start  = $request->start;
-      $eventos->end  = $request->end;
-      $eventos->save();
+      $datosEvento = request()->except(['_token','_method']);
+      $respuesta = evento::where('id', '=', $id)->update($datosEvento);
 
-      print_r($eventos);
+      return response()->json($respuesta);
     }
 
     /**
