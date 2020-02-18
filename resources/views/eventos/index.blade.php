@@ -8,9 +8,7 @@
 <link rel="stylesheet" href="{{ asset('fullcalendar/timegrid/main.css')}}">
 
 <script src="{{ asset('fullcalendar/core/main.js')}}" defer></script>
-
 <script src="{{ asset('fullcalendar/interaction/main.js')}}" defer></script>
-
 <script src="{{ asset('fullcalendar/daygrid/main.js')}}" defer></script>
 <script src="{{ asset('fullcalendar/list/main.js')}}" defer></script>
 <script src="{{ asset('fullcalendar/timegrid/main.js')}}" defer></script>
@@ -31,15 +29,23 @@
 
       dateClick:function(info){
         $('#txtFecha').val(info.dateStr);
+        $('#txtTitulo').val("");
+        $('#txtHoraEmpieza').val("");
+        $('#txtHoraTermina').val("");
+        $('#txtColor').val();
+        $('#txtDescription').val("");
+
+        //$('#btnModificar').attr("disabled", true);
+
         $('#exampleModal').modal();
       },
       eventClick:function(info){
-        if(info){
+
         $('#txtID').val(info.event.id);
         $('#txtTitulo').val(info.event.title);
 
         mes = (info.event.start.getMonth()+1);
-        dia = (info.event.start.getDay());
+        dia = (info.event.start.getDate());
         anio = (info.event.start.getFullYear());
 
         mes = (mes<10)?"0"+mes:mes;
@@ -57,32 +63,10 @@
         $('#txtColor').val(info.event.backgroundColor);
         $('#txtDescription').val(info.event.extendedProps.description);
 
-        $('#exampleModal').modal();
-      }else{
-        $('#txtID').val(info.event.id);
-        $('#txtTitulo').val(info.event.title);
+         //$('#btnAgregar').attr("disabled", true);
 
-        mes = (info.event.start.getMonth()+1);
-        dia = (info.event.start.getDay());
-        anio = (info.event.start.getFullYear());
-
-        mes = (mes<10)?"0"+mes:mes;
-        dia = (dia<10)?"0"+dia:dia;
-
-        horaStart = (info.event.start.getHours()+":"+info.event.start.getMinutes());
-        horaStart = (info.event.start.getMinutes() == 00)?horaStart+"0":horaStart;
-
-        horaEnd = (info.event.end.getHours()+":"+info.event.end.getMinutes());
-        horaEnd = (info.event.end.getMinutes() == 00)?horaEnd+"0":horaEnd;
-
-        $('#txtFecha').val(anio+"-"+mes+"-"+dia);
-        $('#txtHoraEmpieza').val(horaStart);
-        $('#txtHoraTermina').val(horaEnd);
-        $('#txtColor').val(info.event.backgroundColor);
-        $('#txtDescription').val(info.event.extendedProps.description);
 
         $('#exampleModal').modal();
-      }
       },
 
       events:"{{ url('/eventos/show') }}"
@@ -96,6 +80,7 @@
     $('#btnAgregar').click(function(){
       ObjEvento = recolectarDatosGUI("POST");
       enviarInformacion('', ObjEvento);
+
     })
 
     $('#btnEliminar').click(function(){
@@ -110,7 +95,7 @@
 
     function recolectarDatosGUI(method){
       nuevoEvento={
-        id:$('#txtID').val(),
+        //id:$('#txtID').val(),
         title:$('#txtTitulo').val(),
         description:$('#txtDescription').val(),
         color:$('#txtColor').val(),
@@ -198,7 +183,9 @@
         <div class="modal-footer">
 
           <button id="btnAgregar" class="btn btn-success">Agregar</button>
+
           <button id="btnModificar" class="btn btn-warning">Modificar</button>
+
           <button id="btnEliminar" class="btn btn-danger">Borrar</button>
           <!--<button id="btnCancelar" class="btn btn-secondary">Cancelar</button>-->
 
@@ -209,6 +196,5 @@
     </div>
 
   </div>
-
 
 @endsection

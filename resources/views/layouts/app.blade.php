@@ -7,7 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Calendario') }}</title>
+    <title> DGAC | Calendario</title>
+    <link rel="shortcut icon" href="/images/logo_solo.ico">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -18,20 +19,34 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{asset('css/calendario.css')}}" rel="stylesheet" >
 
     @yield('scripts')
 
 </head>
+
+<!-- <header class="header black-bg">
+ <div class="top-menu">
+    <ul class="nav pull-left top-menu">
+
+    </ul>
+ </div>
+
+</header> -->
+
+
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Calendario') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <nav class="nav pull-left top-menu black-bg">
+            <div class="container row">
+              <div class="">
+              <a rel="nofollow">
+                <img src="images/logo_solo.png" style="margin:5px 10px 0px 0; widht:38px; height:38px;" class="logoMPF" title="Ministerio Público Fiscal | Procuración General de la Nación">
+              </a>
+              </div>
+              <div>
+                 <a class="logo"> <span>DGAC</span> | Calendario</a>
+              </div>
             </div>
         </nav>
 
@@ -42,4 +57,24 @@
         </main>
     </div>
 </body>
+
+<footer class="site-footer">
+            <div class="row">
+                <div class="col-lg-4 text-right" style="margin-top:4px;">
+                    <img src="images/logoTrans.png" style="height: 80px;" id="logoFooter" title="Dirección General de Análisis Criminal y Planificación Estratégica de la Persecución Penal">
+                </div>
+                <div class="col-lg-5 text-center footerDireccion">
+                    <ul>
+                        <li>AYUDA DE INFORMÁTICA</li>
+                        <li><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; (011) 4338-4338 | <i class="fa fa-phone" aria-hidden="true"></i>&nbsp; VoIP 4338 | <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; soporte@mpf.gov.ar</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 text-center footerDireccion">
+                    <ul>
+                        <li>SUGERENCIAS</li>
+                        <li><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; dac@mpf.gov.ar</li>
+                    </ul>
+                </div>
+            </div>
+</footer>
 </html>
