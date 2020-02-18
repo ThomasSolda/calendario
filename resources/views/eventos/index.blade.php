@@ -7,11 +7,13 @@
 <link rel="stylesheet" href="{{ asset('fullcalendar/list/main.css')}}">
 <link rel="stylesheet" href="{{ asset('fullcalendar/timegrid/main.css')}}">
 
+<script scr="{{ asset('fullcalendar/core/locales/es.js') }}" defer></script>
 <script src="{{ asset('fullcalendar/core/main.js')}}" defer></script>
 <script src="{{ asset('fullcalendar/interaction/main.js')}}" defer></script>
 <script src="{{ asset('fullcalendar/daygrid/main.js')}}" defer></script>
 <script src="{{ asset('fullcalendar/list/main.js')}}" defer></script>
 <script src="{{ asset('fullcalendar/timegrid/main.js')}}" defer></script>
+
 
 <script>
 
@@ -73,9 +75,11 @@
 
     });
 
-    calendar.setOption('locale', 'Es');
+    calendar.setOption('locale', 'es');
 
     calendar.render();
+
+
 
     $('#btnAgregar').click(function(){
       ObjEvento = recolectarDatosGUI("POST");

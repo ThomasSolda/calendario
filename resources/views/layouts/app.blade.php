@@ -51,30 +51,12 @@
         </nav>
 
         <main class="py-4">
-          <div class="container">
+          <div class="container" style="background-color: #FFFFFF !important">
             @yield('content')
           </div>
         </main>
     </div>
 </body>
 
-<footer class="site-footer">
-            <div class="row">
-                <div class="col-lg-4 text-right" style="margin-top:4px;">
-                    <img src="images/logoTrans.png" style="height: 80px;" id="logoFooter" title="Dirección General de Análisis Criminal y Planificación Estratégica de la Persecución Penal">
-                </div>
-                <div class="col-lg-5 text-center footerDireccion">
-                    <ul>
-                        <li>AYUDA DE INFORMÁTICA</li>
-                        <li><i class="fa fa-phone" aria-hidden="true"></i>&nbsp; (011) 4338-4338 | <i class="fa fa-phone" aria-hidden="true"></i>&nbsp; VoIP 4338 | <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; soporte@mpf.gov.ar</li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 text-center footerDireccion">
-                    <ul>
-                        <li>SUGERENCIAS</li>
-                        <li><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; dac@mpf.gov.ar</li>
-                    </ul>
-                </div>
-            </div>
-</footer>
+
 </html>
